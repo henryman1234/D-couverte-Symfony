@@ -7,9 +7,12 @@
 
 <h2>Toutes les recettes disponibles</h2>
 
-
 <ul>
-    Toutes les recettes
+    {% for recipe in recipes %}
+        <li>
+            <a href="{{url('recipe.show', {slug: recipe.slug,  id:recipe.id})}}">{{recipe.title}}</a>
+        </li>
+    {% endfor %}
 </ul>
 
 {% endblock %}

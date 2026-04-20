@@ -1,11 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title "{{slug}}" %}
+{% block title recipe.slug %}
 
 
 {% block body %}
 
-<p>Recette partiulière<p>
+<h2>{{recipe.title}}</h2>
+
+<p>{{recipe.content | nl2br}}</h2>
 
 
 
