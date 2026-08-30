@@ -3,10 +3,16 @@
 namespace App\Entity;
 
 use App\Repository\RecipeRepository;
+use App\Validator\BanWord;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 #[ORM\Entity(repositoryClass: RecipeRepository::class)]
+#[UniqueEntity("title", message: "Ce titre existe déjà")]
+#[UniqueEntity("slug", message: "ce slug existe déjà !")]
 class Recipe
 {
     #[ORM\Id]
@@ -15,13 +21,17 @@ class Recipe
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $title = null;
+    #[Assert\Length(min: 5)]
+    #[BanWord()]
+    private string $title = "";
 
     #[ORM\Column(length: 255)]
+    #[Assert\Regex("/^[a-z0-9]+(?:-[a-z0-9]+)*$/", message: "Ceci n'est pas un slug valide")]
+    #[Assert\Length(min: 5)]
     private ?string $slug = null;
 
     #[ORM\Column(type: Types::TEXT)]
-    private ?string $content = null;
+    private string $content = "";
 
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
@@ -30,6 +40,9 @@ class Recipe
     private ?\DateTimeImmutable $updateAt = null;
 
     #[ORM\Column(nullable: true)]
+    #[Assert\NotBlank()]
+    #[Assert\Positive()]
+    #[Assert\LessThan(value: 1440, message: "Cette durée est beaucoup trop longue")]
     private ?int $duration = null;
 
     public function getId(): ?int
