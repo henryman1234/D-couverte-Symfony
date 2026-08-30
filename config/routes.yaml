@@ -10,3 +10,7 @@
 controllers:
     resource: routing.controllers
 
+    # home:
+    #     path: /
+    #     methods: App\Controller\HomeController::index
+
