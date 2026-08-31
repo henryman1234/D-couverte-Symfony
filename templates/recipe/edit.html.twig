@@ -1,0 +1,12 @@
+{% extends  "base.html.twig" %}
+
+{% block  title  "Modifier l'article: " ~ recipe.slug %}
+
+{% block body %}
+
+<h1>{{recipe.title}}</h1>
+
+{{form(form)}}
+
+
+{%  endblock %}
