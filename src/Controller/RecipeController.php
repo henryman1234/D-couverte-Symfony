@@ -2,19 +2,32 @@
 
 namespace App\Controller;
 
+use App\Demo;
 use App\Entity\Recipe;
 use App\Form\RecipeType;
 use App\Repository\RecipeRepository;
 use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\FormFactory;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Validator\ConstraintViolation;
+use Symfony\Component\Validator\ConstraintViolationListInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 final class RecipeController extends AbstractController
 {
+
+    #[Route("/demo")]
+    public function demo (Demo $demo) {
+        
+        return new Response("Découverte des services");
+    }
+
+
     #[Route(path: "/recettes", name: "recipe.index")]
     public function index (Request $request, RecipeRepository $repository, EntityManagerInterface $em): Response {
 
@@ -49,9 +62,10 @@ final class RecipeController extends AbstractController
     }
 
     #[Route(path: "/recettes/{id}/edit", name: "recipe.edit", requirements: ["id" => "\d+"])]
-    public function edit (Recipe $recipe, Request $request, EntityManagerInterface $em) {
+    public function edit(Recipe $recipe, Request $request, EntityManagerInterface $em) {
 
         $form = $this->createForm(RecipeType::class, $recipe);
+        // $form = $formFactory->create(RecipeType::class, $recipe);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() &&  $form->isValid()) {
