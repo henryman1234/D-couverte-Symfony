@@ -74,7 +74,7 @@ class RecipeType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Recipe::class,
-            "validation_groups" => ["Default", "Extra"]
+            // "validation_groups" => ["Default", "Extra"]
         ]);
     }
 }
