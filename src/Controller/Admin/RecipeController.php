@@ -37,16 +37,22 @@ final class RecipeController extends AbstractController
 
         $plat = $repository->findOneBy(["slug" =>  "patte-bolognaise"]);
 
-        
-        $recipes = $em->getRepository(Recipe::class)->findAll();
+        // $category = (new Category())
+        //     ->setCreatedAt(new DateTimeImmutable())
+        //     ->setUpdatedAt(new DateTimeImmutable())
+        //     ->setName("Demo")
+        //     ->setSlug("demo");
 
-        // $recipes = $repository->test(500);
-        // dd($recipes[3]->getCategory()->getName());
-
-        // $em->remove($recipes[3]);
-
+        // $em->persist($category);
         // $em->flush();
-        // $recipes =  $repository->findWithDurationLowerThan(10);
+        // $recipes = $em->getRepository(Recipe::class)->findAll();
+        $recipes = $repository->findWithDurationLowerThan(1000);
+        // $recipes[0]->setCategory($category);
+        // Une instance de catégorie
+       
+
+
+        $em->flush();
 
         return $this->render("admin/recipe/index.html.twig",  [
             "recipes" => $recipes,

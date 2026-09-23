@@ -24,8 +24,23 @@ class RecipeRepository extends ServiceEntityRepository
         return $this->createQueryBuilder("r")
             ->where("r.duration <=  :duration" )
             ->orderBy("r.duration", "ASC")
-            ->setMaxResults(2)
+            ->setMaxResults(100)
             ->setParameter("duration", $duration)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function test (int $duration) {
+        return $this->createQueryBuilder("r")
+            ->where("r.duration <= :duration")
+            // ->leftJoin('r.category', 'c')
+            ->select('r')
+            // ->select('c', 'r')
+            // ->andWhere('c.slug =  \'categorie-petit-plat\'')
+            ->andWhere('r.category = 6')
+            ->setParameter("duration", $duration)
+            ->setMaxResults(10)
+            ->orderBy("r.duration", "ASC")
             ->getQuery()
             ->getResult();
     }

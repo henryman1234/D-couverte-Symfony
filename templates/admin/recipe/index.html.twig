@@ -26,7 +26,9 @@
                     <a href="{{url('admin.recipe.show', {id: recipe.id, slug: recipe.slug})}}">{{recipe.getTitle()}}</a>
                 </td>
 
-                <td>{{recipe.category.name | default("")}}</td>
+                <!-- On affiche le nom de la catégorie asoiée à la page -->
+                <td>{{recipe.category.getName() | default("")}}</td>
+
 
                 <td>
 
