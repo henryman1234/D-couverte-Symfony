@@ -1,4 +1,4 @@
-{%  extends "base.html.twig" %}
+{%  extends "admin/admin.html.twig" %}
 
 {% block title%}Toutes les recettes{%endblock %}
 
@@ -7,14 +7,15 @@
 <h1>La page de toutes les Recettes</h1>
 
 <p>
-    <a class="btn btn-primary btn-sm" href="{{path('recipe.create')}}">Créer une recette</a>
+    <a class="btn btn-primary btn-sm" href="{{path('admin.recipe.create')}}">Créer une recette</a>
 </p>
 
 <table class="table table-striped">
     <thead>
         <tr>
             <th>Titre</th>
-            <th>Actions</th>
+            <th>Catégorie</th>
+            <th style="width: 200px;">Actions</th>
         </tr>
     </thead>
 
@@ -22,17 +23,19 @@
         {% for recipe in recipes%}
             <tr>
                 <td>
-                    <a href="{{url('recipe.show', {id: recipe.id, slug: recipe.slug})}}">{{recipe.getTitle()}}</a>
+                    <a href="{{url('admin.recipe.show', {id: recipe.id, slug: recipe.slug})}}">{{recipe.getTitle()}}</a>
                 </td>
+
+                <td>{{recipe.category.name | default("")}}</td>
 
                 <td>
 
                     <div class="d-flex gap-2">
 
-                        <a class="btn-sm btn btn-primary" href="{{url('recipe.edit', {id: recipe.id})}}">Modifier</a>
+                        <a class="btn-sm btn btn-primary" href="{{url('admin.recipe.edit', {id: recipe.id})}}">Modifier</a>
 
                         <!-- Les formumlaires n'acceptent les requets en Delete -->
-                        <form action="{{path('recipe.delete', {id: recipe.id})}}" method="post">
+                        <form action="{{path('admin.recipe.delete', {id: recipe.id})}}" method="post">
 
                             <input type="hidden" name="_method"  value="DELETE">
                             <button type="submit"  class="btn-sm  btn btn-danger">Supprimer</button>

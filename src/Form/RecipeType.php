@@ -2,8 +2,10 @@
 
 namespace App\Form;
 
+use App\Entity\Category;
 use App\Entity\Recipe;
 use DateTimeImmutable;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Event\PostSubmitEvent;
 use Symfony\Component\Form\Event\PreSubmitEvent;
@@ -29,6 +31,11 @@ class RecipeType extends AbstractType
                 //     new Regex("/^[a-z0-9]+(?:-[a-z0-9]+)*$/", message: "Ceci n'est pas un slug valide"),
                 //     new Length(min: 5)
                 // ])
+            ])
+            ->add("category", EntityType::class, [
+                "class" => Category::class,
+                "choice_label" => "name",
+                "expanded" =>  true
             ])
             ->add('content')
             // ->add('createdAt', null, [
