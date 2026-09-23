@@ -40,15 +40,6 @@ final class RecipeController extends AbstractController
         
         $recipes = $em->getRepository(Recipe::class)->findAll();
 
-        $category = (new Category())
-            ->setUpdatedAt(new DateTimeImmutable())
-            ->setCreatedAt(new DateTimeImmutable())
-            ->setName("Demo")
-            ->setSlug("demo");
-        
-        $em->persist($category);
-        $recipes[0]->setCategory($category);
-
         // $recipes = $repository->test(500);
         // dd($recipes[3]->getCategory()->getName());
 

@@ -44,8 +44,6 @@ class Recipe
     #[Assert\LessThan(value: 1000, message: "Cette valeur est trop grande")]
     private ?int $duration = null;
 
-    #[ORM\ManyToOne(inversedBy: 'recipes', cascade:["persist"])]
-    private ?Category $category = null;
 
     public function getId(): ?int
     {
@@ -124,15 +122,5 @@ class Recipe
         return $this;
     }
 
-    public function getCategory(): ?Category
-    {
-        return $this->category;
-    }
 
-    public function setCategory(?Category $category): static
-    {
-        $this->category = $category;
-
-        return $this;
-    }
 }

@@ -26,13 +26,6 @@ class CategoryType extends AbstractType
                 "empty_data" => "",
                 "required" => false
             ])
-            ->add("recipes", EntityType::class, [
-                "class" => Recipe::class,
-                "choice_label" => "title",
-                "expanded" => true,
-                "multiple" => true,
-                "by_reference" => false
-            ])
             // ->add('createdAt', null, [
             //     'widget' => 'single_text'
             // ])

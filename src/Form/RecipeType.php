@@ -32,11 +32,6 @@ class RecipeType extends AbstractType
                 //     new Length(min: 5)
                 // ])
             ])
-            ->add("category", EntityType::class, [
-                "class" => Category::class,
-                "choice_label" => "name",
-                "expanded" =>  true
-            ])
             ->add('content')
             // ->add('createdAt', null, [
             //     'widget' => 'single_text'

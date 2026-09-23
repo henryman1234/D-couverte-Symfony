@@ -30,19 +30,6 @@ class RecipeRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function test (int $duration) {
-        return $this->createQueryBuilder("r")
-            ->select("r", "c")
-            ->where("r.duration <= :duration")
-            ->leftJoin("r.category", "c")
-            ->andWhere('c.slug = \'categorie-de-test\'')
-            // ->andWhere('c.id = 1')
-            ->setParameter("duration", $duration)
-            ->orderBy("r.duration", "ASC")
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult();
-    }
 
 
     //Trouver la durée totale de toutes les requettes
