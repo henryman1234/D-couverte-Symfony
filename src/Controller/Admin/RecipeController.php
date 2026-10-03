@@ -20,6 +20,7 @@ use Symfony\Component\Routing\Requirement\Requirement;
 use Symfony\Component\Validator\ConstraintViolation;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 
 #[Route(path: "/admin/recettes", name: "admin.recipe.")]
 final class RecipeController extends AbstractController
@@ -97,14 +98,20 @@ final class RecipeController extends AbstractController
 
 
     #[Route(path: "/{id}/edit", name: "edit", requirements: ["id" => Requirement::DIGITS])]
-    public function edit(Recipe $recipe, Request $request, EntityManagerInterface $em) {
-
+    public function edit(Recipe $recipe, Request $request, EntityManagerInterface $em, UploaderHelper $helper) {
+        // dd($helper->asset($recipe, "thumbnailFile"));
         $form = $this->createForm(RecipeType::class, $recipe);
         // $form = $formFactory->create(RecipeType::class, $recipe);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() &&  $form->isValid()) {
-            // $recipe->setUpdatedAt(new DateTimeImmutable());
+            /** @var UploadedFile  $file */
+            // $file = $form->get("thumbnailFile")->getData();
+            // $fileName = $recipe->getId() . "." . $file->getClientOriginalExtension();
+            // $file->move($this->getParameter("kernel.project_dir")."/public/images/recipes",  $fileName);
+            // $recipe->setThumbnail($fileName);
+
+
             $em->flush();
             $this->addFlash("success", "La recette a bien été modifiée");
             return $this->redirectToRoute('admin.recipe.index');
