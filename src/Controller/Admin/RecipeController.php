@@ -17,12 +17,15 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Routing\Requirement\Requirement;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Validator\ConstraintViolation;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 
 #[Route(path: "/admin/recettes", name: "admin.recipe.")]
+// #[IsGranted("ROLE_USER")]
+#[IsGranted("ROLE_ADMIN")]
 final class RecipeController extends AbstractController
 {
 
@@ -36,6 +39,7 @@ final class RecipeController extends AbstractController
     #[Route(path: "/", name: "index")]
     public function index (Request $request, RecipeRepository $repository, CategoryRepository $categoryRepository, EntityManagerInterface $em): Response {
 
+        // $this->denyAccessUnlessGranted("ROLE_USER");
         $plat = $repository->findOneBy(["slug" =>  "patte-bolognaise"]);
 
         // $category = (new Category())
