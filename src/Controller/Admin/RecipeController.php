@@ -40,7 +40,9 @@ final class RecipeController extends AbstractController
     public function index (Request $request, RecipeRepository $repository, CategoryRepository $categoryRepository, EntityManagerInterface $em): Response {
 
         // $this->denyAccessUnlessGranted("ROLE_USER");
-        $plat = $repository->findOneBy(["slug" =>  "patte-bolognaise"]);
+        // $plat = $repository->findOneBy(["slug" =>  "patte-bolognaise"]);
+
+        
 
         // $category = (new Category())
         //     ->setCreatedAt(new DateTimeImmutable())
@@ -51,16 +53,24 @@ final class RecipeController extends AbstractController
         // $em->persist($category);
         // $em->flush();
         // $recipes = $em->getRepository(Recipe::class)->findAll();
-        $recipes = $repository->findWithDurationLowerThan(1000);
+        // $recipes = $repository->findWithDurationLowerThan(1000);
         // $recipes[0]->setCategory($category);
         // Une instance de catégorie
        
 
 
-        $em->flush();
+        // $em->flush();
+
+        $limit = 2;
+        $page = $request->query->getInt("page", 1);
+        $recipes = $repository->paginateRecipe($page);
+        // $maxPage = ceil($recipes->getTotalItemCount()/ $limit);
+
 
         return $this->render("admin/recipe/index.html.twig",  [
             "recipes" => $recipes,
+            // "maxPage" => $maxPage,
+            "page" => $page
         ]);
     }
 
